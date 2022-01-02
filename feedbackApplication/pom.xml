@@ -9,7 +9,7 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>react-and-spring-data-rest-conditional</artifactId>
+	<artifactId>feedback-application</artifactId>
 	<version>0.0.1</version>
 
 	<name>Feedback Application</name>
