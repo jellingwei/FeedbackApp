@@ -24,6 +24,7 @@ class NewSubmission extends React.Component {
   handleChange(key) {
     return function (e) {
       var state = {};
+      this.setState({ submissionStatus: "" });
       state[key] = e.target.value;
       this.setState(state);
     }.bind(this);
@@ -55,7 +56,7 @@ class NewSubmission extends React.Component {
 
     //Contact Number
     if (typeof fields["contact"] !== "undefined") {
-        if (fields["contact"].match(/^[a-zA-Z]+$/)) {
+        if (fields["contact"].match(/[a-zA-Z]+/)) {
             formIsValid = false;
             errors["contact"] = "Only numbers";
         }
@@ -74,23 +75,27 @@ class NewSubmission extends React.Component {
               'Content-Type': 'application/json',
           }
       }).then(response => {
-    }).done(response => {
         this.setState({ submissionStatus: "Feedback successfully submitted!" });
+    }).done(response => {
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const newFeedback = {};
-    newFeedback["name"] = this.state.name;
-    newFeedback["email"] = this.state.email;
-    newFeedback["contact"] = this.state.contact;
-    newFeedback["agency"] = this.state.agency;
-    newFeedback["description"] = this.state.description;
-    this.onCreate(newFeedback);
-
-
-//    window.location.href = '/';
+    if (this.handleValidation())
+    {
+        const newFeedback = {};
+        newFeedback["name"] = this.state.name;
+        newFeedback["email"] = this.state.email;
+        newFeedback["contact"] = this.state.contact;
+        newFeedback["agency"] = this.state.agency;
+        newFeedback["description"] = this.state.description;
+        this.onCreate(newFeedback);
+        //window.location.href = '/';
+    }
+    else
+    {
+    }
   }
 
   render() {
@@ -103,7 +108,7 @@ class NewSubmission extends React.Component {
         <li>Feedback Submission</li>
         </ul>
         <h2> Feedback Submission </h2>
-        <br />
+        { this.state.submissionStatus !== ""? <div class="alert alert-success"><SubmissionStatus status={this.state.submissionStatus} /></div> : null}
         <label>
           Name:
           <input ref="name" type="text" value={this.state.name} onChange={this.handleChange('name')} />
@@ -132,7 +137,6 @@ class NewSubmission extends React.Component {
         </label>
         <br />
         <button> Submit </button>
-        { this.state.submissionStatus !== ""? <SubmissionStatus status={this.state.submissionStatus} /> : null}
         </div></div>
       </form>
     );

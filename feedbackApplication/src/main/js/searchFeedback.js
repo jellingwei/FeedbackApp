@@ -8,6 +8,8 @@ class SearchFeedback extends React.Component {
     this.state = {
       feedbacks: [],
       attributes: ['agency', 'contact', 'description', 'email', 'name', 'status'],
+      noSearchResult: false,
+      showLoader: false,
       errors: {}
     };
 
@@ -23,21 +25,28 @@ class SearchFeedback extends React.Component {
               }
           }).then(response => {
             const entities = response.entity;
-            this.setState({feedbacks: entities})
+            this.setState({feedbacks: entities});
+            if (entities.length === 0) {
+                this.setState( {noSearchResult: true});
+            }
           }, response => {
-              // erorr
-          });
+
+          }).done(response =>{
+            this.setState( {showLoader: false});
+          } );
   	}
 
   	onSearch(contact,email) {
   		if (contact !== this.state.contact &&
   		    email !== this.state.email) {
+  		    this.setState( {showLoader: true});
   			this.loadFromServer(contact,email);
   		}
   	}
 
   handleSearch(e) {
     e.preventDefault();
+    this.setState( {noSearchResult: false});
     const contact = ReactDOM.findDOMNode(this.refs.contact_search).value;
     const email = ReactDOM.findDOMNode(this.refs.email_search).value;
     if (/^[0-9]+$/.test(contact)) {
@@ -60,6 +69,7 @@ class SearchFeedback extends React.Component {
         <li>Search Feedback</li>
         </ul>
         <h2>Search feedback</h2>
+        { this.state.noSearchResult ? <div class="alert alert-primary"> No result found</div> : null }
         <form onSubmit={this.handleSearch}>
             <label>
                 Contact:
@@ -72,6 +82,7 @@ class SearchFeedback extends React.Component {
               </label>
               <br />
               <button>Search</button>
+              { this.state.showLoader ? <div class="loader"></div> : null }
         </form>
         <br />
         <table>
