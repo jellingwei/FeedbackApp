@@ -5,7 +5,13 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
 @Entity
+@Table(indexes = {
+	@Index(name="contactEmailIndex", columnList="contact, email")
+})
 public class Feedback {
 
 	private @Id @GeneratedValue Long id;
