@@ -26,7 +26,7 @@ Developed With
    By default, this runs the application on port 8080.
 5. The application can be accessed on localhost:8080.
 
-
+#### Notes
 The app relies on http://processfeedback.atwebpages.com/submit.php?feedback=<input> for obtaining the feedback's status.
 If the returned sentiment is positive, then the status is considered "Accepted". 
 Otherwise, if the returned sentiment is negative, the status is considered "Rejected".
