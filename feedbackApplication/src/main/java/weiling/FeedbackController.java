@@ -26,8 +26,8 @@ public class FeedbackController {
     }
 
     @PostMapping("/feedback")
-    Feedback newFeedback(@RequestBody Feedback newEmployee) {
-        return repository.save(newEmployee);
+    Feedback newFeedback(@RequestBody Feedback newFeedback) {
+        return repository.save(newFeedback);
     }
 
     @GetMapping("/feedbacks")
@@ -54,7 +54,7 @@ public class FeedbackController {
                     feedback.setStatus("Unknown (Try again later)");
                 }
             } catch (ResourceAccessException ex) {
-                
+
                 // suppress timeouts
                 feedback.setStatus("Unknown (Try again later)");
             } finally {
