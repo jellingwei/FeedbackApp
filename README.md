@@ -18,7 +18,7 @@ Developed With
 ### Steps to setup the application
 
 1. Clone the repo:
-   `git clone https://github.com/your_username_/Project-Name.git`
+   `git clone https://github.com/jellingwei/FeedbackApp`
 2. Set up and run a MySQL database on port 3306 (as specified in `feedbackApplication/resources/application.properties`)
    Indicate a username and password for accessing the MySQL database in `feedbackApplication/resources/application.properties`.
 3. Create the database: ``create database feedback_db;``
